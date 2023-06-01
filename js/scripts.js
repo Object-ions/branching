@@ -1,26 +1,41 @@
-window.onload = function() {
-    // we get the form element
-    const form = document.querySelector("form");
-    // we create an event handler for the form's submission
-    form.onsubmit = function(event) {
+
+    // New function name!
+    function hideResultsAndError() {
+    // New line of code to hide the error message.
+    document.getElementById("error-message").setAttribute("class", "hidden");
+    document.getElementById("swings").setAttribute("class", "hidden");
+    document.getElementById("coaster").setAttribute("class", "hidden");
+    document.getElementById("tower").setAttribute("class", "hidden");
+    document.getElementById("sorry").setAttribute("class", "hidden");
+    }
+  
+  window.onload = function(event) {
+    document.querySelector("form").onsubmit = function(event) {
+      // updated to use new function name!
+      hideResultsAndError();
       event.preventDefault();
-  
-      // we access two HTML elements, the drink menu and the message to underaged folks,
-      // and add the hidden class to those elements;
-      // doing this clears results before displaying new ones, which
-      // allows the user to submit the form again and again, and
-      // see new results.
-      let drinkMenu = document.getElementById("drinks");
-      drinkMenu.setAttribute("class", "hidden");
-      let under21Message = document.getElementById("under-21");
-      under21Message.setAttribute("class", "hidden");
-  
-      // we gather the age value
-      const age = parseInt(document.querySelector("input#age").value);
-  
-      // we check if the age is greater than 21.
-      if (age >= 21) {
-        drinkMenu.removeAttribute("class");
-      } 
-    };
+      
+    const age = parseInt(document.querySelector("input#age").value);
+    const height = parseInt(document.querySelector("input#height").value);
+
+    // we're evaluating the Tower of Doom ride first
+    if (age && height) {
+        // Our original if statement starts here!
+       if (age >= 12 && height >= 60) {
+          document.getElementById("swings").removeAttribute("class");
+          document.getElementById("coaster").removeAttribute("class");
+          document.getElementById("tower").removeAttribute("class");
+        } else if (age >= 12 || height >= 48) {
+          document.getElementById("swings").removeAttribute("class");
+          document.getElementById("coaster").removeAttribute("class");
+        } else if (age >= 6) {
+          document.getElementById("swings").removeAttribute("class");
+        } else {
+          document.getElementById("sorry").removeAttribute("class");
+        }
+        // Our original if statement ends here!
+      } else {
+        document.getElementById("error-message").removeAttribute("class");
+      }
   };
+};
